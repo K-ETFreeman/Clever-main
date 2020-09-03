@@ -10887,4 +10887,9 @@ var awardsSwiper = new Swiper('.awards__container', {
   }
 });
 ;
+document.querySelectorAll('[data-bar]').forEach(function (item) {
+  return new SimpleBar(item, {
+    autoHide: false
+  });
+});
 objectFitImages();
