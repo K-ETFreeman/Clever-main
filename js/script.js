@@ -218,12 +218,12 @@ function scratchFooterTags() {
   });
 }
 
-window.addEventListener('resize', function () {
+window.addEventListener('resize', new function () {
   scratchFooterTags();
-});
-window.addEventListener('load', function () {
+}());
+window.addEventListener('load', new function () {
   scratchFooterTags();
-});
+}());
 ;
 var imagepopupcontainer = document.querySelector('.imagepopup');
 var imgpopuped = false,
