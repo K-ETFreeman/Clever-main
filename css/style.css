@@ -821,11 +821,21 @@ h2 {
 }
 
 .video__shapecreator {
-  background-image: url("../img/youtube-interface.png");
-  background-position: top center;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
+  position: relative;
   padding-bottom: 56.2%;
+}
+
+.video__shapecreator img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  -o-object-fit: "cover";
+     object-fit: "cover";
+  -o-object-position: "center";
+     object-position: "center";
+  font-family: "object-fit: cover; object-position: center";
 }
 
 main {
