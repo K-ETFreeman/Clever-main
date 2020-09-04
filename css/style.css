@@ -228,31 +228,6 @@ h2 {
 
 .header .orange.active a {
   color: #F83C00;
-  -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-          transform: translateY(3px);
-}
-
-.header .orange.active::before {
-  height: 6px;
-  max-height: 6px;
-  -webkit-transform: scaleY(1);
-      -ms-transform: scaleY(1);
-          transform: scaleY(1);
-}
-
-.header .active a {
-  -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-          transform: translateY(3px);
-}
-
-.header .active::before {
-  height: 6px;
-  max-height: 6px;
-  -webkit-transform: scaleY(1);
-      -ms-transform: scaleY(1);
-          transform: scaleY(1);
 }
 
 .header .line:nth-child(2) {
@@ -4030,6 +4005,34 @@ button.swiper-pagination-bullet {
 }
 
 @media screen and (min-width: 1024px) {
+  .header .orange.active a {
+    -webkit-transform: translateY(3px);
+        -ms-transform: translateY(3px);
+            transform: translateY(3px);
+  }
+
+  .header .orange.active::before {
+    height: 6px;
+    max-height: 6px;
+    -webkit-transform: scaleY(1);
+        -ms-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+
+  .header .active a {
+    -webkit-transform: translateY(3px);
+        -ms-transform: translateY(3px);
+            transform: translateY(3px);
+  }
+
+  .header .active::before {
+    height: 6px;
+    max-height: 6px;
+    -webkit-transform: scaleY(1);
+        -ms-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+
   .header__burger {
     display: none;
   }
