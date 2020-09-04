@@ -48,13 +48,15 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     prevScroll = pageYOffset;
   });
   window.addEventListener('scroll', function () {
-    if (!visible && prevScroll) {
-      if (pageYOffset < prevScroll && topElem.getBoundingClientRect().bottom < 0) {
+    if (!visible && prevScroll || pageYOffset + window.innerHeight >= document.body.scrollHeight - 30) {
+      if (pageYOffset < prevScroll && topElem.getBoundingClientRect().bottom < 0 || pageYOffset + window.innerHeight >= document.body.scrollHeight - 30) {
         visible = true;
         button.classList.add('visible');
       } else {
-        visible = false;
-        button.classList.remove('visible');
+        if (pageYOffset != prevScroll) {
+          visible = false;
+          button.classList.remove('visible');
+        }
       }
     } else visible = false;
 
@@ -85,7 +87,7 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
 ;
 {
   var setCoords = function setCoords(item, parCoords) {
-    item.style.setProperty('top', parCoords.bottom + 'px');
+    item.style.setProperty('top', parCoords.bottom - 3 + 'px');
     if (parCoords.left + item.offsetWidth < window.innerWidth) item.style.setProperty('left', parCoords.left + 'px');else item.style.setProperty('right', '0px');
   };
 
@@ -101,6 +103,55 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
         if (item.classList.contains('active')) return item.classList.remove('active');
         setCoords(item, parent.getBoundingClientRect(), parent);
         item.classList.add('active');
+      };
+    }
+
+    if (trigger == 'hover') {
+      var hovP = false,
+          hovI = false,
+          showtime = 0;
+
+      var hide = function hide() {
+        item.classList.remove('active');
+        parent.classList.remove('active');
+        showtime = 0;
+      };
+
+      var show = function show() {
+        item.classList.add('active');
+        parent.classList.add('active');
+        setCoords(item, parent.children[0].getBoundingClientRect(), parent, 500);
+        showtime = new Date().getTime();
+      };
+
+      var delayhide = function delayhide() {
+        return setTimeout(function () {
+          return !hovP && !hovI ? hide() : 0;
+        }, 0);
+      };
+
+      parent.onclick = function (e) {
+        e.preventDefault();
+      };
+
+      parent.onmouseenter = function () {
+        hovP = true;
+        if (!item.classList.contains('active')) show();
+      };
+
+      parent.onmouseleave = function () {
+        hovP = false;
+        if (!hovP && !hovI) delayhide();
+      };
+
+      item.onmouseenter = function () {
+        hovI = true;
+        if (!item.classList.contains('active')) show();
+      };
+
+      item.onmouseleave = function () {
+        hovI = false;
+        if (!hovP && !hovI) delayhide();
       };
     }
   });
@@ -10593,136 +10644,32 @@ document.addEventListener('scroll', function () {
 });
 
 ;
-var subSwiper = document.querySelector('.subnav__swiper .swiper-wrapper');
-
-var getActive = function getActive() {
-  return subSwiper.querySelector('.swiper-slide-active');
-};
-
-var count = 1,
-    elemCount = subSwiper.children.length;
-
-var setMarginValue = function setMarginValue(item, swiperWidth, baseMargin, defaultMargin, itemNumb) {
-  var j = 0,
-      totalWidth = 0,
-      currentWidth = 0;
-
-  for (var i = item; j < count; j++) {
-    currentWidth = i.children[0].offsetWidth;
-    totalWidth += currentWidth;
-    i.style.setProperty('width', currentWidth + 'px');
-    i = i.nextElementSibling;
-  }
-
-  j = 0;
-  var marginValue1 = (swiperWidth - totalWidth) / (count - 1);
-  var marginValue2 = (swiperWidth - totalWidth) / (count + 1);
-
-  if (marginValue2 >= baseMargin) {
-    if (count == elemCount) {
-      for (var _i = itemNumb; _i < elemCount; _i++) {
-        subSwiper.children[_i].style.setProperty('margin-right', baseMargin + 'px');
-      }
-
-      return item.style.setProperty('margin-left', 'auto');
-    }
-
-    item.style.setProperty('margin-left', marginValue2 + 'px');
-
-    for (var _i2 = item; j < count; j++) {
-      _i2.style.setProperty("margin-right", marginValue2 + 'px');
-
-      if (j == count - 1 && marginValue2 < defaultMargin) _i2.style.setProperty("margin-right", defaultMargin + 'px');
-      _i2 = _i2.nextElementSibling;
-    }
-  } else for (var _i3 = item; j < count - 1; j++) {
-    _i3.style.setProperty("margin-right", marginValue1 + 'px');
-
-    _i3 = _i3.nextElementSibling;
-  }
-};
-
-var reset = function reset(item, swiperWidth, margin) {
-  item.style.setProperty('width', (swiperWidth - margin * (count - 1)) / count + 'px');
-  item.style.setProperty('margin-right', margin + 'px');
-  item.style.removeProperty('margin-left');
-};
-
-function calculateAll() {
-  var active = getActive(),
-      itemNumb = 0;
-
-  for (var i = 0; i < elemCount; i++) {
-    if (subSwiper.children[i] == active) itemNumb = i;
-    reset(subSwiper.children[i], subSwiper.offsetWidth, 150);
-  }
-
-  if (count < 2) return;
-  setMarginValue(active, subSwiper.offsetWidth, 30, 150, itemNumb);
-}
-
-var subnavSwiper = new Swiper('.subnav__swiper', {
+var projectsSwiper = new Swiper('.projects__container', {
   direction: 'horizontal',
-  slidesPerView: 'auto',
-  on: {
-    init: function init() {
-      calculateAll();
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      style.innerHTML = '.subnav__link { transition: .15s ease-out; }';
-      setTimeout(function () {
-        return document.getElementsByTagName('head')[0].appendChild(style);
-      }, 300);
-    },
-    resize: calculateAll,
-    slideChangeTransitionStart: calculateAll,
-    breakpoint: function breakpoint() {
-      count = 1;
-      if (window.innerWidth >= 750) count = Math.min(2, elemCount);
-      if (window.innerWidth >= 950) count = Math.min(3, elemCount);
-      if (window.innerWidth >= 1300) count = Math.min(4, elemCount);
-      if (window.innerWidth >= 1550) count = Math.min(5, elemCount);
-
-      if (count == elemCount) {
-        subSwiper.parentNode.parentNode.querySelectorAll('.subnav__right,.subnav__left').forEach(function (item) {
-          return item.classList.add('hidden');
-        });
-      } else {
-        subSwiper.parentNode.parentNode.querySelectorAll('.subnav__right,.subnav__left').forEach(function (item) {
-          return item.classList.remove('hidden');
-        });
-      }
-    }
-  },
-  spaceBetween: 150,
+  loop: true,
+  calculateHeight: true,
   breakpoints: {
     320: {
       slidesPerView: 1,
-      allowTouchMove: elemCount > 1
+      centeredSlides: true,
+      spaceBetween: 30
     },
-    750: {
-      slidesPerView: Math.min(2, elemCount),
-      allowTouchMove: elemCount > 2
+    769: {
+      slidesPerView: 2,
+      centeredSlides: false,
+      spaceBetween: 30
     },
-    950: {
-      slidesPerView: Math.min(3, elemCount),
-      allowTouchMove: elemCount > 3
-    },
-    1300: {
-      slidesPerView: Math.min(4, elemCount),
-      allowTouchMove: elemCount > 4
-    },
-    1550: {
-      slidesPerView: Math.min(5, elemCount),
-      allowTouchMove: elemCount > 5
+    1200: {
+      slidesPerView: 3,
+      centeredSlides: true,
+      spaceBetween: 40
     }
   },
   navigation: {
-    nextEl: '.subnav__right',
-    prevEl: '.subnav__left'
+    nextEl: '.projects__arrow_right',
+    prevEl: '.projects__arrow_left'
   }
 });
-;
 var casesSwiper = new Swiper('.cases__swiper', {
   direction: 'horizontal',
   loop: true,
