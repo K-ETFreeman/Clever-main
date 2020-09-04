@@ -130,10 +130,6 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
         }, 0);
       };
 
-      parent.onclick = function (e) {
-        e.preventDefault();
-      };
-
       parent.onmouseenter = function () {
         hovP = true;
         if (!item.classList.contains('active')) show();
