@@ -218,16 +218,27 @@ h2 {
           box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
 }
 
-.header .orange::before {
-  background-color: #F83C00;
-}
-
-.header .orange:hover {
+.header .orange.active {
   background-color: #3e3f43;
 }
 
-.header .orange:hover a {
+.header .orange.active::before {
+  background-color: #F83C00;
+}
+
+.header .orange.active a {
   color: #F83C00;
+  -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+          transform: translateY(3px);
+}
+
+.header .orange.active::before {
+  height: 6px;
+  max-height: 6px;
+  -webkit-transform: scaleY(1);
+      -ms-transform: scaleY(1);
+          transform: scaleY(1);
 }
 
 .header .line:nth-child(2) {
@@ -1116,6 +1127,14 @@ body {
 
 .simplepopup_nav.orange .simplepopup__list-title {
   color: #F83C00;
+}
+
+.simplepopup_nav.orange .simplepopup__list-title::before {
+  background-color: #F83C00;
+}
+
+.simplepopup_nav.orange .simplepopup__list li::before {
+  background-color: #F83C00;
 }
 
 .simplepopup_nav.orange .simplepopup__list li a {
