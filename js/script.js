@@ -107,6 +107,10 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
     }
 
     if (trigger == 'hover') {
+      parent.onclick = function (e) {
+        e.preventDefault();
+      };
+
       var hovP = false,
           hovI = false,
           showtime = 0;

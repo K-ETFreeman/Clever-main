@@ -1130,6 +1130,12 @@ body {
   color: white;
 }
 
+.simplepopup_nav.orange .simplepopup__list li a::before {
+  -webkit-transform: translateX(1px);
+      -ms-transform: translateX(1px);
+          transform: translateX(1px);
+}
+
 .simplepopup_nav.orange .simplepopup__list li a:hover {
   color: #F83C00;
 }
