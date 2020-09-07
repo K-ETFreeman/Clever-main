@@ -108,7 +108,7 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
 
     if (trigger == 'hover') {
       parent.onclick = function (e) {
-        e.preventDefault();
+        if (new Date().getTime() - showtime < 50) e.preventDefault();
       };
 
       var hovP = false,
