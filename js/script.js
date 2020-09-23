@@ -74,7 +74,7 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
     if (target == "parent") target = item.parentNode;
     if (target == "grandparent") target = item.parentNode.parentNode;
     if (!target) target = document;
-    if (selector) return target.querySelectorAll(selector).forEach(function (item) {
+    if (selector) target.querySelectorAll(selector).forEach(function (item) {
       if (detailsMode && item.classList.contains('details')) {
         if (item.style.maxHeight) item.style.removeProperty('max-height');else item.style.maxHeight = item.scrollHeight + 'px';
       }
@@ -135,21 +135,25 @@ document.querySelectorAll('.interactive-trigger').forEach(function (item) {
       };
 
       parent.onmouseenter = function () {
+        if (window.innerWidth < 1024) return;
         hovP = true;
         if (!item.classList.contains('active')) show();
       };
 
       parent.onmouseleave = function () {
+        if (window.innerWidth < 1024) return;
         hovP = false;
         if (!hovP && !hovI) delayhide();
       };
 
       item.onmouseenter = function () {
+        if (window.innerWidth < 1024) return;
         hovI = true;
         if (!item.classList.contains('active')) show();
       };
 
       item.onmouseleave = function () {
+        if (window.innerWidth < 1024) return;
         hovI = false;
         if (!hovP && !hovI) delayhide();
       };
@@ -10760,6 +10764,11 @@ var testimonialsSwiper = new Swiper('.testimonials__container', {
     prevEl: '.testimonials__arrow_left'
   }
 });
+document.querySelectorAll('[data-bar]').forEach(function (item) {
+  return new SimpleBar(item, {
+    autoHide: false
+  });
+});
 ;
 var awardsSwiper = new Swiper('.awards__container', {
   direction: 'horizontal',
@@ -10834,9 +10843,4 @@ var awardsSwiper = new Swiper('.awards__container', {
   }
 });
 ;
-document.querySelectorAll('[data-bar]').forEach(function (item) {
-  return new SimpleBar(item, {
-    autoHide: false
-  });
-});
 objectFitImages();
