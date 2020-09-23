@@ -273,6 +273,7 @@ function scratchFooterTags() {
   });
 }
 
+window.onresize = scratchFooterTags;
 window.addEventListener('resize', new function () {
   scratchFooterTags();
 }());
