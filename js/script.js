@@ -197,6 +197,15 @@ document.querySelectorAll('.youtubevideo').forEach(function (item) {
   };
 });
 ;
+var textarea = document.querySelector('.calculation__form textarea');
+
+if (textarea) {
+  textarea.addEventListener('input', function () {
+    if (textarea.offsetHeight < textarea.scrollHeight) textarea.classList.add('overflow');else textarea.classList.remove('overflow');
+  });
+}
+
+;
 var LArrow = document.querySelector('.tags-linewrapper-leftarrow'),
     RArrow = document.querySelector('.tags-linewrapper-rightarrow');
 var LineWrapper = document.querySelector('.tags-linewrapper-content'),
@@ -10649,32 +10658,36 @@ document.addEventListener('scroll', function () {
 });
 
 ;
-var projectsSwiper = new Swiper('.projects__container', {
-  direction: 'horizontal',
-  loop: true,
-  calculateHeight: true,
-  breakpoints: {
-    320: {
-      slidesPerView: 1,
-      centeredSlides: true,
-      spaceBetween: 30
+
+if (document.querySelector('.projects__container')) {
+  var projectsSwiper = new Swiper('.projects__container', {
+    direction: 'horizontal',
+    loop: true,
+    calculateHeight: true,
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        centeredSlides: true,
+        spaceBetween: 30
+      },
+      769: {
+        slidesPerView: 2,
+        centeredSlides: false,
+        spaceBetween: 30
+      },
+      1200: {
+        slidesPerView: 3,
+        centeredSlides: true,
+        spaceBetween: 40
+      }
     },
-    769: {
-      slidesPerView: 2,
-      centeredSlides: false,
-      spaceBetween: 30
-    },
-    1200: {
-      slidesPerView: 3,
-      centeredSlides: true,
-      spaceBetween: 40
+    navigation: {
+      nextEl: '.projects__arrow_right',
+      prevEl: '.projects__arrow_left'
     }
-  },
-  navigation: {
-    nextEl: '.projects__arrow_right',
-    prevEl: '.projects__arrow_left'
-  }
-});
+  });
+}
+
 var casesSwiper = new Swiper('.cases__swiper', {
   direction: 'horizontal',
   loop: true,
@@ -10723,6 +10736,51 @@ var awardsSwiper = new Swiper('.trusts__container', {
   }
 });
 ;
+
+if (document.querySelector('.takealso__container')) {
+  var takealso = new Swiper('.takealso__container', {
+    direction: 'horizontal',
+    loop: true,
+    spaceBetween: 100,
+    breakpoints: {
+      470: {
+        slidesPerView: 1,
+        centeredSlides: true,
+        spaceBetween: 30
+      },
+      550: {
+        slidesPerView: 1.1,
+        centeredSlides: true,
+        spaceBetween: 50
+      },
+      590: {
+        slidesPerView: 1.2,
+        centeredSlides: true,
+        spaceBetween: 80
+      },
+      660: {
+        slidesPerView: 1.3,
+        centeredSlides: true,
+        spaceBetween: 100
+      },
+      769: {
+        slidesPerView: 2,
+        centeredSlides: false,
+        spaceBetween: 50
+      },
+      1200: {
+        slidesPerView: 3,
+        centeredSlides: false,
+        spaceBetween: 50
+      }
+    },
+    navigation: {
+      nextEl: '.takealso__arrow_right',
+      prevEl: '.takealso__arrow_left'
+    }
+  });
+}
+
 var testimonialsSwiper = new Swiper('.testimonials__container', {
   direction: 'horizontal',
   loop: true,
