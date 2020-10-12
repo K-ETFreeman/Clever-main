@@ -37,7 +37,6 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   var button = document.getElementById('up');
   var prevScroll,
       visible = false;
-  var topElem = document.querySelector('main section');
   button.addEventListener('click', function () {
     window.scroll({
       top: 0,
@@ -49,7 +48,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   });
   window.addEventListener('scroll', function () {
     if (!visible && prevScroll || pageYOffset + window.innerHeight >= document.body.scrollHeight - 30) {
-      if (pageYOffset < prevScroll && topElem.getBoundingClientRect().bottom < 0 || pageYOffset + window.innerHeight >= document.body.scrollHeight - 30) {
+      if (pageYOffset < prevScroll && pageYOffset > window.innerHeight || pageYOffset + window.innerHeight >= document.body.scrollHeight - 30) {
         visible = true;
         button.classList.add('visible');
       } else {
